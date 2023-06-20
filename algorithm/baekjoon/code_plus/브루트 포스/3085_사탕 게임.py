@@ -11,7 +11,6 @@ arr = list()
 for i in range(n): # 2차원 리스트로 만들기
     arr.append(list(sys.stdin.readline().rstrip()))
 
-start = time.time()
 def check(arr): # 바뀐 리스트에서 가장 긴 줄이 어딘지 전부 계산해보기
     longest = 0 # 전체 리스트중 가장 긴 길이 변수 선언
     cnt = 1
@@ -38,37 +37,56 @@ def check(arr): # 바뀐 리스트에서 가장 긴 줄이 어딘지 전부 계�
 
     return longest
 
+# start = time.time()
+# longest_arr = list()
+# # 좌우 바꾸기
+# for i in range(n):
+#     for j in range(n-1):
+#         # 바꿀 값 구하기
+#         a = arr[i][j]
+#         b = arr[i][j+1]
+#         # 바꾸기
+#         arr1 = copy.deepcopy(arr)
+#         arr1[i][j] = b
+#         arr1[i][j+1] = a
+#         longest_arr.append(check(arr1)) # 가장 긴 줄 확인
 
+# # 상하 바꾸기
+# for i in range(n):
+#     for j in range(n-1):
+#         # 바꿀 값 구하기
+#         a = arr[j][i]
+#         b = arr[j+1][i]
+#         # 바꾸기
+#         arr1 = copy.deepcopy(arr)
+#         arr1[j][i] = b
+#         arr1[j+1][i] = a
+#         longest_arr.append(check(arr1)) # 가장 긴 줄 확인
+
+# print(max(longest_arr)) # 전체 중 가장 긴 값 최종 결과로 출력
+# end = time.time()
+# print(f"{end - start:.15f} sec")
+
+# deepcopy를 사용하는 것 보다 그냥 직접 바꿔준게 훨씬 빨랐다.
+start = time.time()
 longest_arr = list()
-
 # 좌우 바꾸기
 for i in range(n):
     for j in range(n-1):
-        # 바꿀 값 구하기
-        a = arr[i][j]
-        b = arr[i][j+1]
-        # 바꾸기
-        arr1 = copy.deepcopy(arr)
-        arr1[i][j] = b
-        arr1[i][j+1] = a
-        longest_arr.append(check(arr1)) # 가장 긴 줄 확인
+        arr[i][j], arr[i][j+1] = arr[i][j+1], arr[i][j] # 바꾸기
+        longest_arr.append(check(arr)) # 가장 긴 줄 확인
+        arr[i][j], arr[i][j+1] = arr[i][j+1], arr[i][j] # 다시 바꾸기
 
 # 상하 바꾸기
 for i in range(n):
     for j in range(n-1):
-        # 바꿀 값 구하기
-        a = arr[j][i]
-        b = arr[j+1][i]
-        # 바꾸기
-        arr1 = copy.deepcopy(arr)
-        arr1[j][i] = b
-        arr1[j+1][i] = a
-        longest_arr.append(check(arr1)) # 가장 긴 줄 확인
+        arr[j][i], arr[j+1][i] = arr[j+1][i], arr[j][i] # 바꾸기
+        longest_arr.append(check(arr)) # 가장 긴 줄 확인
+        arr[j][i], arr[j+1][i] = arr[j+1][i], arr[j][i] # 다시 바꾸기
 
 print(max(longest_arr)) # 전체 중 가장 긴 값 최종 결과로 출력
-
 end = time.time()
-print(f"{end - start:.5f} sec")
+# print(f"{end - start:.15f} sec")
 
 # 00 01
 # 01 02
